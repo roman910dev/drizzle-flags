@@ -2,6 +2,9 @@
 
 This package can be used to use [flags](https://planetscale.com/learn/courses/mysql-for-developers/examples/bitwise-operations) columns in drizzle. These columns can store multiple boolean values using a single integer column, which can save up a lot of space. For example, using this method 8 booleans can be stored in a single `TINYINT`.
 
+> [!IMPORTANT]
+> Currently, this package only supports MySQL databases. Other databases will be added.
+
 ## Installation
 
 ```bash

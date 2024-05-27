@@ -1,6 +1,11 @@
 {
 	"name": "drizzle-flags",
 	"version": "0.0.1",
+	"homepage": "https://github.com/roman910dev/drizzle-flags",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/roman910dev/drizzle-flags.git"
+	},
 	"description": "Use flags columns in drizzle. These columns can store multiple boolean values using a single integer column, which can save up a lot of space.",
 	"main": "dist/index.js",
 	"types": "dist/index.d.ts",
