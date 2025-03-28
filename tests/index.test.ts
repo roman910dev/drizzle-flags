@@ -23,14 +23,7 @@ function* generateOpts<T>(
 const schema = {
 	flagsTest: mysqlTable('flags_test', {
 		id: serial('id').primaryKey(),
-		flags: flags('flags', ['f0', 'f1', 'f2', 'f3', 'f4', 'f5']).notNull().default({
-			f0: true,
-			f1: true,
-			f2: true,
-			f3: true,
-			f4: true,
-			f5: true,
-		}),
+		flags: flags('flags', ['f0', 'f1', 'f2', 'f3', 'f4', 'f5']).notNull(),
 	}),
 }
 const connection = createConnection(process.env.DATABASE_URL!)

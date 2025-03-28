@@ -1,8 +1,7 @@
 {
 	"name": "drizzle-flags",
-	"version": "0.0.4",
+	"version": "0.0.3",
 	"homepage": "https://github.com/roman910dev/drizzle-flags",
-	"type": "module",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/roman910dev/drizzle-flags.git"
@@ -26,7 +25,6 @@
 		"@ianvs/prettier-plugin-sort-imports": "^4.2.1",
 		"@types/chai": "^4.3.16",
 		"@types/mocha": "^10.0.6",
-		"@types/node": "20",
 		"@typescript-eslint/eslint-plugin": "^7.10.0",
 		"@typescript-eslint/parser": "^7.10.0",
 		"chai": "^5.1.1",
@@ -42,10 +40,5 @@
 	},
 	"dependencies": {
 		"drizzle-orm": "*"
-	},
-	"pnpm": {
-		"onlyBuiltDependencies": [
-			"esbuild"
-		]
 	}
 }

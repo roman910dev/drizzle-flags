@@ -252,7 +252,7 @@ export const flagsExtras = <
 		flags.map((f) => [
 			f,
 			sql`${column} & ${1 << flags.indexOf(f)}`
-				.mapWith(Boolean)
+				.mapWith({ mapFromDriverValue: (val) => !!val })
 				.as(f),
 		]),
 	) as Record<keyof C['data'], SQL.Aliased<boolean>>
