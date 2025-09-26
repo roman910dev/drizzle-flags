@@ -250,7 +250,7 @@ export const flagsExtras = <
 	},
 >(
 	column: MySqlColumn<C>,
-) => {
+): Record<keyof C['data'], SQL.Aliased<boolean>> => {
 	const flags = Object.keys(column.mapFromDriverValue(0) as C['data'])
 	return Object.fromEntries(
 		flags.map((f) => [
