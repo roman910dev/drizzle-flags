@@ -1,6 +1,6 @@
 {
 	"name": "drizzle-flags",
-	"version": "0.0.4-unreleased",
+	"version": "0.0.4",
 	"description": "Use flags columns in drizzle. These columns can store multiple boolean values using a single integer column, which can save up a lot of space.",
 	"author": "Román Via-Dufresne Saus <roman910dev@gmail.com>",
 	"homepage": "https://github.com/roman910dev/drizzle-flags",
