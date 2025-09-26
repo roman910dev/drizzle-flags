@@ -7,7 +7,7 @@ import { drizzle } from 'drizzle-orm/mysql2'
 import { describe, it } from 'mocha'
 import { createConnection } from 'mysql2'
 
-import flags, { f0, f1, flagsExtras } from '../src'
+import flags, { f0, f1, flagsExtras } from '../src/index.js'
 
 function* generateOpts<T>(
 	opts: T[],

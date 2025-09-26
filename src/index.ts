@@ -1,5 +1,9 @@
 import type { ColumnBaseConfig, ColumnDataType, SQL } from 'drizzle-orm'
-import type { MySqlColumn } from 'drizzle-orm/mysql-core'
+import type {
+	ConvertCustomConfig,
+	MySqlColumn,
+	MySqlCustomColumnBuilder,
+} from 'drizzle-orm/mysql-core'
 import { sql } from 'drizzle-orm'
 import { customType } from 'drizzle-orm/mysql-core'
 
@@ -27,13 +31,15 @@ const flagsToInt = <U extends string, T extends [U, ...U[]]>(
 	return data
 }
 
+type CustomTypeConfig<T extends readonly [string, ...string[]]> = {
+	data: Record<T[number], boolean>
+	driverData: number
+	notNull: true
+	default: true
+}
+
 const _flags = <U extends string, T extends [U, ...U[]]>(flags: T) =>
-	customType<{
-		data: Record<T[number], boolean>
-		driverData: number
-		notNull: true
-		default: true
-	}>({
+	customType<CustomTypeConfig<T>>({
 		dataType: () => intTypeForFlags(flags.length),
 		toDriver: (value) => flagsToInt(flags, value),
 		fromDriver(value) {
@@ -45,25 +51,25 @@ const _flags = <U extends string, T extends [U, ...U[]]>(flags: T) =>
 	})
 
 /**
- * Use the `flags` function to create a flags column. Provide the name of each flag. 
+ * Use the `flags` function to create a flags column. Provide the name of each flag.
  * These names will not actually go in the database, so camelCase is fine.
- * 
+ *
  * As each flag is a single bit, these are the maximum number of flags that can be stored in each integer type:
  * -   up to 8 flags -> `TINYINT`
  * -   up to 16 flags -> `SMALLINT`
  * -   up to 24 flags -> `MEDIUMINT`
  * -   up to 32 flags -> `INT`
  * -   up to 64 flags -> `BIGINT`
- * 
+ *
  * @param name - The name of the flags column.
  * @param flags - An array of flag names.
  * @returns A custom type representing the flags column.
- * 
+ *
  * @example
  * ```typescript
  * // schema.ts
  * import flags from 'drizzle-flags'
- * 
+ *
  * export const users = mysqlTable('users', {
  *   id: serial('id').primaryKey(),
  *   username: varchar('username', { length: 191 }).notNull().unique(),
@@ -88,11 +94,12 @@ const _flags = <U extends string, T extends [U, ...U[]]>(flags: T) =>
 export const flags = <U extends string, T extends [U, ...U[]]>(
 	name: string,
 	flags: T,
-) => _flags(flags)(name)
+): MySqlCustomColumnBuilder<ConvertCustomConfig<string, CustomTypeConfig<T>>> =>
+	_flags(flags)(name)
 
 /**
  * Example usage:
- * 
+ *
  */
 
 export default flags
@@ -162,8 +169,7 @@ export const f1 = <
 >(
 	column: MySqlColumn<C>,
 	value: U | U[],
-) => f(column, value, true)
-
+): SQL<unknown> => f(column, value, true)
 
 /**
  * The `f0` and `f1` functions can be used to filter rows based on the value of a flag.
@@ -210,14 +216,14 @@ export const f0 = <
 >(
 	column: MySqlColumn<C>,
 	value: U | U[],
-) => f(column, value, false)
+): SQL<unknown> => f(column, value, false)
 
 /**
  * The `flagsExtras` function can be used to include the flags in the extra fields of the query.
  *
  * @param column - The column object representing the flags.
  * @returns An object containing the flags and their corresponding SQL expressions.
- * 
+ *
  * @example
  * ```typescript
  * const user = await db.query.users.findFirst({
@@ -225,7 +231,7 @@ export const f0 = <
  * 	columns: { id: true, username: true },
  * 	extras: flagsExtras(schema.users.notifications),
  * })
- * 
+ *
  * console.log(user)
  * // Output:
  * // {
