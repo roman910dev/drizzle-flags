@@ -1,0 +1,6 @@
+{
+	"$schema": "https://jsr.io/schema/config-file.v1.json",
+	"name": "@roman910dev/drizzle-flags",
+	"version": "0.0.4-unreleased",
+	"exports": "./src/index.ts"
+}
