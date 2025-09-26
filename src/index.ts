@@ -1,10 +1,10 @@
 import type { ColumnBaseConfig, ColumnDataType, SQL } from 'drizzle-orm'
+import { sql } from 'drizzle-orm'
 import type {
 	ConvertCustomConfig,
 	MySqlColumn,
 	MySqlCustomColumnBuilder,
 } from 'drizzle-orm/mysql-core'
-import { sql } from 'drizzle-orm'
 import { customType } from 'drizzle-orm/mysql-core'
 
 const _intSizes = {
@@ -116,12 +116,10 @@ function f<
 	const flags = Object.keys(template) as [U, ...U[]]
 	const values = typeof value === 'string' ? [value] : value
 	const val = Object.fromEntries(
-		flags.map((f) => [f, values.includes(f) ? true : false]),
+		flags.map((f) => [f, values.includes(f)]),
 	) as Record<U, boolean>
 	const int = flagsToInt(flags, val)
-	return target
-		? sql`${column} & ${int} = ${int}`
-		: sql`${column} & ${int} = 0`
+	return target ? sql`${column} & ${int} = ${int}` : sql`${column} & ${int} = 0`
 }
 
 /**
