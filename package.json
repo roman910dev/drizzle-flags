@@ -11,6 +11,9 @@
 	"type": "module",
 	"main": "dist/src/index.js",
 	"types": "dist/src/index.d.ts",
+	"files": [
+		"dist"
+	],
 	"scripts": {
 		"build": "tsc --build tsconfig.build.json",
 		"check": "biome check .",
