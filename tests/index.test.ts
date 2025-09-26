@@ -7,7 +7,7 @@ import { drizzle } from 'drizzle-orm/mysql2'
 import { describe, it } from 'mocha'
 import { createConnection } from 'mysql2'
 
-import flags, { f0, f1, flagsExtras } from '../src'
+import flags, { f0, f1, flagsExtras } from '../src/index.js'
 
 function* generateOpts<T>(
 	opts: T[],
@@ -16,8 +16,7 @@ function* generateOpts<T>(
 ): Generator<T[], void, void> {
 	if (current.length === length) yield current
 	else
-		for (const opt of opts)
-			yield* generateOpts(opts, length, [...current, opt])
+		for (const opt of opts) yield* generateOpts(opts, length, [...current, opt])
 }
 
 const schema = {
@@ -101,8 +100,8 @@ describe('flags', () => {
 		})
 		console.log(quests)
 		expect(quests.length).to.equal(2)
-		expect(quests.every((q) => q.flags.f0 && q.flags.f2 && !q.flags.f3)).to
-			.be.true
+		expect(quests.every((q) => q.flags.f0 && q.flags.f2 && !q.flags.f3)).to.be
+			.true
 	})
 
 	it('should clean up the seed', async () => {
