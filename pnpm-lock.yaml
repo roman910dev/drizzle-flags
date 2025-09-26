@@ -9,7 +9,7 @@ importers:
   .:
     dependencies:
       drizzle-orm:
-        specifier: '*'
+        specifier: <1.0.0
         version: 0.30.10(mysql2@3.9.8)
     devDependencies:
       '@biomejs/biome':
